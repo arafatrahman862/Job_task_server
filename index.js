@@ -24,43 +24,17 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const categorizeCollection = client.db("Job_task").collection("categorize");
-    const clozerCollection = client.db("Job_task").collection("clozer");
-    const comprehensionCollection = client.db("Job_task").collection("comprehension");
+    const questionCollection = client.db("Job_task").collection("question");
 
     app
-      .get('/categorize', async (req, res) => {
-        const result = await categorizeCollection.find().toArray();
-        res.send(result)
+      .get('/question', async (_req, res) => {
+        const result = await questionCollection.find().toArray();
+        res.send(result);
       })
-      .post('/categorize', async (req, res) => {
-        const categorize = req.body;
-        // console.log("/categorize", categorize)
-        const result = await categorizeCollection.insertOne(categorize);
-        res.send(result)
-      })
-
-    app
-      .get('/clozer', async (_req, res) => {
-        const result = await clozerCollection.find().toArray();
-        res.send(result)
-      })
-      .post('/clozer', async (req, res) => {
-        const clozer = req.body;
-        // console.log("/clozer:", clozer)
-        const result = await clozerCollection.insertOne(clozer);
-        res.send(result)
-      })
-
-    app
-      .get('/comprehension', async (_req, res) => {
-        const result = await comprehensionCollection.find().toArray();
-        res.send(result)
-      })
-      .post('/comprehension', async (req, res) => {
-        const comprehension = req.body;
-        // console.log("/comprehension", comprehension)
-        const result = await comprehensionCollection.insertOne(comprehension);
+      .post('/question', async (req, res) => {
+        const question = req.body;
+        // console.log("/question", question)
+        const result = await questionCollection.insertOne(question);
         res.send(result)
       })
 
@@ -73,7 +47,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
 
 app.get('/', (req, res) => {
   res.send('Job task')
