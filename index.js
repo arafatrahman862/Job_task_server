@@ -25,6 +25,7 @@ async function run() {
     await client.connect();
 
     const questionCollection = client.db("Job_task").collection("question");
+    const answerCollection = client.db("Job_task").collection("answer");
 
     app
       .get('/question', async (_req, res) => {
@@ -35,6 +36,16 @@ async function run() {
         const question = req.body;
         // console.log("/question", question)
         const result = await questionCollection.insertOne(question);
+        res.send(result)
+      })
+      .get('/answer', async (_req, res) => {
+        const result = await questionCollection.find().toArray();
+        res.send(result);
+      })
+      .post('/answer', async (req, res) => {
+        const answer = req.body;
+        // console.log("/question", question)
+        const result = await questionCollection.insertOne(answer);
         res.send(result)
       })
 
